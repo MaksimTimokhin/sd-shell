@@ -1,6 +1,5 @@
 name: linter
 
-
 on: [push]
 
 jobs:
@@ -8,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Run a one-line script
+      - name: Run linter
         run: |
           python run-clang-format.py -r src
           python run-clang-format.py -r test --exclude test/catch
