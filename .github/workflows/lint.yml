@@ -11,4 +11,4 @@ jobs:
       - name: Run a one-line script
         run: |
           python run-clang-format.py -r src
-          python run-clang-format.py -r test
+          python run-clang-format.py -r test --exclude test/catch
