@@ -1,0 +1,16 @@
+name: testing
+
+on: [push]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run tests
+        run: |
+          mkdir build
+          cd build
+          cmake ..
+          make test
+          bin/test
