@@ -1,0 +1,1 @@
+add_executable(sd_shell ${SRC_FILES} main.cpp)
