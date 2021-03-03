@@ -2,7 +2,6 @@
 
 #include <catch_amalgamated.hpp>
 
-
 TEST_CASE("Unquoted", "Tokenizer") {
     std::string s = "abc a b d\n";
     Tokenizer tok(fmemopen(s.data(), s.size(), "r"));
@@ -33,7 +32,6 @@ TEST_CASE("Unquoted", "Tokenizer") {
     tok.Next();
     REQUIRE(tok.IsEnd());
 }
-
 
 TEST_CASE("Quotes", "Tokenizer") {
     std::string s = "x\"abc\"y\nc'a'b\n";
