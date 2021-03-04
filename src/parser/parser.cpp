@@ -61,7 +61,8 @@ std::vector<std::shared_ptr<ICommand>> Parser::ParseLine() {
             has_non_empty_expr = true;
         }
     }
-    if (!argv.empty() || !expander_.ParseVariableAssignment(current_value)) {
+    if (!current_value.empty() &&
+        (!argv.empty() || !expander_.ParseVariableAssignment(current_value))) {
         argv.push_back(current_value);
     }
     if (!argv.empty()) {
