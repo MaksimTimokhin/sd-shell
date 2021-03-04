@@ -1,5 +1,4 @@
 #include <command/command_factory.h>
-
 #include <unistd.h>
 #include <wait.h>
 
@@ -76,5 +75,6 @@ TEST_CASE("Cat", "Command") {
 TEST_CASE("Wc", "Command") {
     std::vector<std::string> argv{"wc", "../test/test_file", "../test/test_file"};
     auto comm = CommandFactory::CreateCommand(argv);
-    REQUIRE(RunCommand(comm.get(), false).second == "3\t3\t15\t../test/test_file\n3\t3\t15\t../test/test_file\n6\t6\t30\ttotal\n");
+    REQUIRE(RunCommand(comm.get(), false).second ==
+            "3\t3\t15\t../test/test_file\n3\t3\t15\t../test/test_file\n6\t6\t30\ttotal\n");
 }
