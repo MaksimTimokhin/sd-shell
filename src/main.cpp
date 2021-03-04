@@ -1,12 +1,7 @@
-#include <tokenizer/tokenizer.h>
-
-#include <iostream>
-#include <sstream>
+#include <runner/runner.h>
 
 int main() {
-    std::stringstream s("");
-    std::cout << std::cin.good() << std::endl
-              << std::cin.peek() << std::endl
-              << std::cin.good() << std::endl;
+    Runner runner(stdin);
+    runner.Go();    
     return 0;
 }
