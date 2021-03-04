@@ -22,7 +22,7 @@ bool IsSpace(int c) {
 }
 
 Tokenizer::Tokenizer(FILE *in) : in_(in) {
-    Next();
+    // Next();
 }
 
 bool Tokenizer::IsEnd() const {

@@ -22,14 +22,9 @@ void CatCommand::Run() {
 }
 
 void CatCommand::ReadStream(std::istream &in) {
-    std::string line;
-    bool flag = false;
-    while (std::getline(in, line)) {
-        if (flag) {
-            std::cout << std::endl;
-        } else {
-            flag = true;
-        }
-        std::cout << line;
+    int c = in.get();
+    while (c != EOF) {
+        std::cout << char(c);
+        c = in.get();
     }
 }

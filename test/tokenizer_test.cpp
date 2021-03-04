@@ -6,6 +6,7 @@ TEST_CASE("Unquoted", "Tokenizer") {
     std::string s = "abc a b d\n";
     Tokenizer tok(fmemopen(s.data(), s.size(), "r"));
 
+    tok.Next();
     REQUIRE(std::get<ExpressionToken>(tok.GetToken()).expression == "abc");
     REQUIRE(!tok.IsEnd());
     tok.Next();
@@ -37,6 +38,7 @@ TEST_CASE("Quotes", "Tokenizer") {
     std::string s = "x\"abc\"y\nc'a'b\n";
     Tokenizer tok(fmemopen(s.data(), s.size(), "r"));
 
+    tok.Next();
     REQUIRE(std::get<ExpressionToken>(tok.GetToken()).expression == "x");
     tok.Next();
     REQUIRE(std::get<ExpressionToken>(tok.GetToken()).expression == "abc");
@@ -59,6 +61,7 @@ TEST_CASE("Quotes", "Tokenizer") {
 TEST_CASE("Escape", "Tokenizer") {
     std::string s = "\"\\\"\"\\ '\\'\n";
     Tokenizer tok(fmemopen(s.data(), s.size(), "r"));
+    tok.Next();
     REQUIRE(std::get<ExpressionToken>(tok.GetToken()).expression == "\"");
     tok.Next();
     REQUIRE(std::get<ExpressionToken>(tok.GetToken()).expression == " ");
@@ -74,6 +77,7 @@ TEST_CASE("Space", "Tokenizer") {
     std::string s = "x   y \t z\t \n";
     Tokenizer tok(fmemopen(s.data(), s.size(), "r"));
 
+    tok.Next();
     REQUIRE(std::get<ExpressionToken>(tok.GetToken()).expression == "x");
     tok.Next();
     REQUIRE(std::holds_alternative<SpaceToken>(tok.GetToken()));
@@ -95,6 +99,7 @@ TEST_CASE("Pipes", "Tokenizer") {
     std::string s = "x| y |z | u\n";
     Tokenizer tok(fmemopen(s.data(), s.size(), "r"));
 
+    tok.Next();
     REQUIRE(std::get<ExpressionToken>(tok.GetToken()).expression == "x");
     tok.Next();
     REQUIRE(std::holds_alternative<PipeToken>(tok.GetToken()));

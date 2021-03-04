@@ -60,6 +60,9 @@ std::optional<Expander::VariableAssignment> Expander::ParseVariableAssignment(
         }
         name.push_back(expression[i]);
     }
+    if (operator_pos == std::string::npos) {
+        return std::nullopt;
+    }
 
     return VariableAssignment{name, ExpandExpression(expression.substr(operator_pos + 1))};
 }

@@ -1,13 +1,16 @@
 #include "runner.h"
 
-#include <iostream>
 #include <unistd.h>
 #include <wait.h>
 
-Runner::Runner(FILE *in) : parser_(in) {}
+#include <iostream>
+
+Runner::Runner(FILE *in) : parser_(in) {
+}
 
 void Runner::Go() {
     for (;;) {
+        // std::cout << "$ " << std::flush;
         auto line = parser_.ParseLine();
         if (line.empty()) {
             continue;
@@ -17,7 +20,7 @@ void Runner::Go() {
             line[0]->Run();
             continue;
         }
-        
+
         std::vector<std::vector<int>> pipes(line.size() + 1, std::vector<int>(2));
         pipes[0][0] = 0;
         pipes[line.size()][1] = 1;
@@ -42,7 +45,7 @@ void Runner::Go() {
                 close(pipes[i][0]);
             }
             if (i != line.size() - 1) {
-                close(pipes[i + 1][ 1]);
+                close(pipes[i + 1][1]);
             }
         }
 

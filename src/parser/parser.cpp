@@ -2,18 +2,21 @@
 
 #include <iostream>
 
-Parser::Parser(FILE *in) : tokenizer_(in) {}
+Parser::Parser(FILE *in) : tokenizer_(in) {
+}
 
 std::vector<std::shared_ptr<ICommand>> Parser::ParseLine() {
     std::vector<Token> line;
     do {
+        std::cout << "$ " << std::flush;
+        line.clear();
+        tokenizer_.Next();
         if (tokenizer_.IsEnd()) {
             return {CommandFactory::CreateCommand({"exit"})};
         }
 
-        for (;;) {
+        for (;; tokenizer_.Next()) {
             auto token = tokenizer_.GetToken();
-            tokenizer_.Next();
             if (std::holds_alternative<NewLineToken>(token)) {
                 break;
             }
@@ -34,6 +37,7 @@ std::vector<std::shared_ptr<ICommand>> Parser::ParseLine() {
                 argv.push_back(current_value);
             }
             current_value.clear();
+            continue;
         }
         if (std::holds_alternative<PipeToken>(token)) {
             if (!has_non_empty_expr) {
@@ -45,6 +49,7 @@ std::vector<std::shared_ptr<ICommand>> Parser::ParseLine() {
                 argv.clear();
             }
             has_non_empty_expr = false;
+            continue;
         }
         if (auto constant = std::get_if<ConstantToken>(&token); constant) {
             current_value += constant->value;
@@ -62,6 +67,7 @@ std::vector<std::shared_ptr<ICommand>> Parser::ParseLine() {
     if (!argv.empty()) {
         pipe.push_back(CommandFactory::CreateCommand(argv));
     }
+
     return pipe;
 }
 

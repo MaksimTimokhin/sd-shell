@@ -1,8 +1,8 @@
 #pragma once
 
-#include <tokenizer/tokenizer.h>
-#include <expander/expander.h>
 #include <command/command_factory.h>
+#include <expander/expander.h>
+#include <tokenizer/tokenizer.h>
 
 class Parser {
 public:

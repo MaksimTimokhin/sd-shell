@@ -13,6 +13,6 @@ public:
 
 private:
     FILE *in_;
-    Token current_token_;
+    Token current_token_ = NewLineToken{};
     bool is_end_ = false;
 };
