@@ -19,6 +19,7 @@ void ExternalCommand::Run() {
         if (execvp(argv_[0], argv_.data()) < 0) {
             std::cerr << "command not found: " << argv_[0] << std::endl;
         }
+        exit(0);
     } else if (pid > 0) {
         waitpid(pid, 0, 0);
     } else {

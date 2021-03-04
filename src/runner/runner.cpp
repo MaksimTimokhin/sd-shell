@@ -10,7 +10,6 @@ Runner::Runner(FILE *in) : parser_(in) {
 
 void Runner::Go() {
     for (;;) {
-        // std::cout << "$ " << std::flush;
         auto line = parser_.ParseLine();
         if (line.empty()) {
             continue;
@@ -39,13 +38,17 @@ void Runner::Go() {
                 dup2(pipes[i + 1][1], 1);
                 line[i]->Run();
                 exit(0);
-            }
-            pids[i] = pid;
-            if (i != 0) {
-                close(pipes[i][0]);
-            }
-            if (i != line.size() - 1) {
-                close(pipes[i + 1][1]);
+            } else if (pid > 0) {
+                pids[i] = pid;
+                if (i != 0) {
+                    close(pipes[i][0]);
+                }
+                if (i != line.size() - 1) {
+                    close(pipes[i + 1][1]);
+                }
+            } else {
+                perror("fork");
+                exit(1);
             }
         }
 
