@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <wait.h>
 
+#include <array>
 #include <iostream>
 
 Runner::Runner(FILE *in) : parser_(in) {
@@ -20,7 +21,7 @@ void Runner::Go() {
             continue;
         }
 
-        std::vector<std::vector<int>> pipes(line.size() + 1, std::vector<int>(2));
+        std::vector<std::array<int, 2>> pipes(line.size() + 1);
         pipes[0][0] = 0;
         pipes[line.size()][1] = 1;
         for (size_t i = 1; i < line.size(); ++i) {
